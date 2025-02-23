@@ -1,148 +1,146 @@
-<?php
-// Получаем номер студента из URL-параметра
-$studentNumber = isset($_GET['studentNumber']) ? intval($_GET['studentNumber']) : 0;
-
-// 1. Обновленные примеры согласно image.png
-$examples = [
-    'Повседневная жизнь' => [
-        'Пришёл (а) домой.' => [
-            'Встретил кот' => 'Погладить кота',
-            'Не встретил кота' => 'Пошёл искать кота дома',
-            'Кот встретил и мяукает' => 'Погладить кота, насыпать корм'
-        ]
-    ],
-    'Литературное произведение' => [
-        'Три товарища (Эрих Мария Ремарк)' => [
-            'Поехать на гонки' => 'Выиграть пари, но повредить автомобиль',
-            'Остаться в баре' => 'Встретить Патрицию Хольман',
-            'Помочь Ленцу' => 'Попасть в политическую стычку',
-            'Уехать из города' => 'Потерять связь с друзьями'
-        ]
-    ],
-    'Информатика' => [
-        'Обработка HTTP-запроса' => [
-            'GET-запрос' => 'Получить данные с сервера',
-            'POST-запрос' => 'Создать новый ресурс',
-            'PUT-запрос' => 'Обновить существующий ресурс',
-            'DELETE-запрос' => 'Удалить ресурс',
-            'PATCH-запрос' => 'Частичное обновление ресурса'
-    ]
-]
-
-];
-
-// 2. Вывод всех примеров (Шаг 1)
-echo '<h2>Шаг 1: Все примеры</h2>';
-foreach ($examples as $category => $scenarios) {
-    echo "<div class='example'><h3>$category</h3>";
-    foreach ($scenarios as $scenario => $options) {
-        echo "<div class='scenario'><b>Сценарий: $scenario</b>";
-        foreach ($options as $condition => $action) {
-            echo "<p>$condition → $action</p>";
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Разветвляющийся алгоритм</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f0f2f5;
+            color: #1a1a1a;
         }
-        echo '</div>';
-    }
-    echo '</div>';
-}
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin: 30px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+        .example {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .example h3 {
+            color: #34495e;
+            margin-top: 0;
+        }
+        .example div {
+            padding: 8px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e8f4fd;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .error {
+            background: #fee;
+            color: #c0392b;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #e74c3c;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <?php
+        echo "<h2>Шаг 1: Все примеры</h2>";
+        echo "<div class='example'>";
+        echo "<h3>1. Повседневная жизнь</h3>";
+        echo "<div>Встретил кот - Погладить кота</div>";
+        echo "<div>Не встретил кота - Пошёл искать кота дома</div>";
+        echo "<div>Кот встретил и мяукает - Погладить кота, насыпать корм</div>";
+        echo "</div>";
+        echo "<div class='example'>";
+        echo "<h3>2. Литературное произведение - Три товарища (Эрих Мария Ремарк)</h3>";
+        echo "<div>Поехать на гонки - Выиграть пари, но повредить автомобиль</div>";
+        echo "<div>Остаться в баре - Встретить Патрицию Хольман</div>";
+        echo "<div>Помочь Ленцу - Попасть в политическую стычку</div>";
+        echo "<div>Уехать из города - Потерять связь с друзьями</div>";
+        echo "</div>";
 
-// 3. Выбор случайного примера (Шаг 2)
-$randomCategory = array_rand($examples);
-$categoryData = $examples[$randomCategory];
-$randomScenario = array_rand($categoryData);
-$scenarioData = $categoryData[$randomScenario];
+        echo "<div class='example'>";
+        echo "<h3>3. Обработка HTTP-запроса</h3>";
+        echo "<div>GET-запрос - Получить данные с сервера</div>";
+        echo "<div>POST-запрос - Создать новый ресурс</div>";
+        echo "<div>PUT-запрос - Обновить существующий ресурс</div>";
+        echo "<div>DELETE-запрос - Удалить ресурс</div>";
+        echo "<div>PATCH-запрос - Частичное обновление ресурса</div>";
+        echo "</div>";
 
-echo '<h2>Шаг 2: Выбранный пример</h2>';
-echo "<div class='selected-example'>";
-echo "<h3>$randomCategory: $randomScenario</h3>";
-foreach ($scenarioData as $condition => $action) {
-    echo "<p>$condition → $action</p>";
-}
-echo '</div>';
-
-// 4. Выбор действия (Шаг 3)
-echo '<h2>Шаг 3: Результат выбора</h2>';
-
-if ($studentNumber <= 0) {
-    die("<div class='error'>Укажите номер студента в URL: ?studentNumber=ВАШ_НОМЕР</div>");
-}
-
-$keys = array_keys($scenarioData);
-$randomKey = $keys[array_rand($keys)];
-$selectedCondition = $keys[array_rand($keys)];
-
-if ($studentNumber % 2 == 0) {
-    // Четный номер - SWITCH
-    switch($selectedCondition) {
-        case $keys[0]:
-            $result = $scenarioData[$keys[0]];
-            break;
-        case $keys[1]:
-            $result = $scenarioData[$keys[1]];
-            break;
-        case $keys[2]:
-            $result = $scenarioData[$keys[2]];
-            break;
-        default:
-            $result = $scenarioData[end($keys)];
-    }
-} else {
-    // Нечетный номер - IF-ELSE
-    if ($selectedCondition == $keys[0]) {
-        $result = $scenarioData[$keys[0]];
-    } elseif ($selectedCondition == $keys[1]) {
-        $result = $scenarioData[$keys[1]];
-    } else {
-        $result = $scenarioData[$keys[2]];
-    }
-}
-
-echo "<div class='result'>";
-echo "<p>Студент №$studentNumber (".($studentNumber%2 == 0 ? 'четный' : 'нечетный').")</p>";
-echo "<p>Выбранное условие: <b>$selectedCondition</b></p>";
-echo "<p>Результат: <b>$result</b></p>";
-echo '</div>';
-
-// Стилизация
-echo '<style>
-    .example {
-        border: 1px solid #ddd;
-        padding: 15px;
-        margin: 10px;
-        border-radius: 8px;
-        background: #f9f9f9;
-    }
-    .scenario {
-        margin: 10px 0;
-        padding: 10px;
-        background: #fff;
-        border-left: 4px solid #007bff;
-    }
-    .selected-example {
-        background: #e3f2fd;
-        padding: 15px;
-        margin: 10px;
-        border: 2px solid #2196F3;
-    }
-    .result {
-        background: #e8f5e9;
-        padding: 15px;
-        margin: 10px;
-        border: 2px solid #4CAF50;
-    }
-    .error {
-        color: #dc3545;
-        padding: 15px;
-        border: 2px solid #dc3545;
-        margin: 10px;
-    }
-    h2 {
-        color: #2c3e50;
-        font-family: Arial;
-        border-bottom: 2px solid #3498db;
-        padding-bottom: 10px;
-    }
-    b {
-        color: #2980b9;
-    }
-</style>';
-?>
+        $selectedExample = rand(1, 3);
+        echo "<h2>Шаг 2: Выбранный пример</h2>";
+        echo "<div class='result'>";
+        echo "Выбран пример {$selectedExample}";
+        echo "</div>";
+        $studentNumber = rand(1, 3);
+        $selectedAction = rand(1, 4);
+        
+        echo "<h2>Шаг 3: Выбранное действие</h2>";
+        echo "<div class='result'>";
+        echo "Студент №$studentNumber (" . ($studentNumber % 2 == 0 ? 'четный' : 'нечетный') . ")<br>";
+        $result = '';
+        if ($selectedExample == 1) {
+            if ($selectedAction == 1) $result = "Встретил кот - Погладить кота";
+            elseif ($selectedAction == 2) $result = "Не встретил кота - Пошёл искать кота дома";
+            else $result = "Кот встретил и мяукает - Погладить кота, насыпать корм";
+        }
+        elseif ($selectedExample == 2) {
+            switch($selectedAction) {
+                case 1: $result = "Поехать на гонки - Выиграть пари, но повредить автомобиль"; break;
+                case 2: $result = "Остаться в баре - Встретить Патрицию Хольман"; break;
+                case 3: $result = "Помочь Ленцу - Попасть в политическую стычку"; break;
+                default: $result = "Уехать из города - Потерять связь с друзьями";
+            }
+        }
+        else {
+            if ($studentNumber % 2 == 0) {
+                // Четный номер - используем SWITCH
+                switch($selectedAction) {
+                    case 1: $result = "GET-запрос - Получить данные с сервера"; break;
+                    case 2: $result = "POST-запрос - Создать новый ресурс"; break;
+                    case 3: $result = "PUT-запрос - Обновить существующий ресурс"; break;
+                    case 4: $result = "DELETE-запрос - Удалить ресурс"; break;
+                    default: $result = "PATCH-запрос - Частичное обновление ресурса"; break;
+                }
+            } else {
+                if ($selectedAction == 1) {
+                    $result = "GET-запрос - Получить данные с сервера";
+                } elseif ($selectedAction == 2) {
+                    $result = "POST-запрос - Создать новый ресурс";
+                } elseif ($selectedAction == 3) {
+                    $result = "PUT-запрос - Обновить существующий ресурс";
+                } elseif ($selectedAction == 4) {
+                    $result = "DELETE-запрос - Удалить ресурс";
+                } else {
+                    $result = "PATCH-запрос - Частичное обновление ресурса";
+                }
+            }
+        }
+        echo "Выбрано действие: $result";
+        echo "</div>";
+        ?>
+    </div>
+</body>
+</html>
